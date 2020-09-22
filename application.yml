@@ -1,0 +1,260 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overridden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+#
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+
+feign:
+  hystrix:
+    enabled: true
+  # client:
+  #     config:
+  #         default:
+  #             connectTimeout: 5000
+  #             readTimeout: 5000
+
+# See https://github.com/Netflix/Hystrix/wiki/Configuration
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          # See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
+          # thread:
+          #     timeoutInMilliseconds: 10000
+  shareSecurityContext: true
+
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: ['configprops', 'env', 'health', 'info', 'jhimetrics', 'logfile', 'loggers', 'prometheus', 'threaddump']
+  endpoint:
+    health:
+      show-details: when_authorized
+      roles: 'ROLE_ADMIN'
+    jhimetrics:
+      enabled: true
+  info:
+    git:
+      mode: full
+  health:
+    mail:
+      enabled: false # When using the MailService, configure an SMTP server and set this to true
+  metrics:
+    export:
+      # Prometheus is the default metrics backend
+      prometheus:
+        enabled: true
+        step: 60
+    enable:
+      http: true
+      jvm: true
+      logback: true
+      process: true
+      system: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      percentiles:
+        all: 0, 0.5, 0.75, 0.95, 0.99, 1.0
+    tags:
+      application: ${spring.application.name}
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+  
+spring:
+  application:
+    name: feusweb
+  cloud:
+    config:
+      server:
+        #git:
+          #uri: https://github.com/spring-cloud-samples/config-repo
+          #basedir: target/config
+        composite:
+           type: native
+           searchLocations: classpath:/config
+      bootstrap: true
+        
+        
+        #native:
+           #searchLocations: classpath:/config
+  profiles:
+    # The commented value for `active` can be replaced with valid Spring profiles to load.
+    # Otherwise, it will be filled in by maven when building the JAR file
+    # Either way, it can be overridden by `--spring.profiles.active` value passed in the commandline or `-Dspring.profiles.active` set in `JAVA_OPTS`
+    active: composite
+#spring.profiles.active#
+  jmx:
+    enabled: false
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      # modify batch size as necessary
+      hibernate.jdbc.batch_size: 250
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      # modify fetch size as necessary
+      hibernate.jdbc.fetch_size: 150
+      hibernate.criteria.literal_handling_mode: BIND
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  messages:
+    basename: i18n/messages
+  main:
+    allow-bean-definition-overriding: true
+  task:
+    execution:
+      thread-name-prefix: feusweb-task-
+      pool:
+        core-size: 2
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: feusweb-scheduling-
+      pool:
+        size: 2
+  thymeleaf:
+    mode: HTML
+  output:
+    ansi:
+      console-available: true
+
+server:
+  servlet:
+    session:
+      cookie:
+        http-only: true
+  context-path: /test
+# Properties to be exposed on the /info management endpoint
+info:
+  # Comma separated list of profiles that will trigger the ribbon to show
+  display-ribbon-on-profiles: 'dev'
+
+# ===================================================================
+# system specific properties
+#
+# ===================================================================
+
+system:
+  clientApp:
+    name: 'UnifiedSecurity'
+  # By default CORS is disabled. Uncomment to enable.
+  # cors:
+  #     allowed-origins: "*"
+  #     allowed-methods: "*"
+  #     allowed-headers: "*"
+  #     exposed-headers: "Authorization,Link,X-Total-Count"
+  #     allow-credentials: true
+  #     max-age: 1800
+  
+  
+  #sms:
+   # uri: https://api.bulkgate.com/http?action=sendsms&username=gopalkrishnams&password=Testing123&sender=PROMOTIONAL&data=SMS_MESSAGE_DATA&number=SMS_MOBILE_NUMBER
+    #senderId: Gopal
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+#
+# ===================================================================
+
+# application:
+      
+application:
+   oauth:
+     #b2e:
+       #Bank:
+         #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
+         #clientId: feus
+         #clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
+         #scope: openId
+       #AppOps:
+         #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
+         #clientId: feus
+         #clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
+         #scope: openId
+     #b2c:
+       #facebook:
+         #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
+         #clientId: feus
+         #clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
+         #scope: openId
+       #google:
+         #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
+         #clientId: feus
+         #clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
+         #scope: openId
+     b2b:
+       UniversalBanking:
+         clientId: f6073423-98a2-4781-9c36-9070eae45539
+         clientSecret: dfa222f7-a793-4679-a0a4-7420f9771469
+       DOB:
+         clientId: de4f7c44-8dac-40fe-a745-55187cfce03e
+         clientSecret: d338a2ad-c17c-45f1-9dbe-360648c8e53d
+
+   swagger:
+      name: feus
+      title: Unified Security API
+      description: Unified Security API documentation
+      version: 1.0.0
+      termsofserviceurl:
+      contactname:
+      contacturl:
+      contactemail:
+      license:
+      licenseurl:
+   feus:
+      publicKeyLocation: config/publickey_json.json
+      privateKeyLocation: config/privatekey_json.json
+      issuer: Finastra
+      jwkKeyId: UnifiedSecurity
+      tokenExpiry: 180000
+      refreshTokenExpiry: 300000
+   authProvider: DB
+   auditConfiguration:
+      queueSize: 5000
+      auditImpl: LOG
+      workerThreadCount: 3
+      
+   propertyFiles: feus-config.properties  
+
+   password:
+#Minimum eight characters, at least one letter and one number: "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+#Minimum eight characters, at least one letter, one number and one special character: "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+#Minimum eight characters, at least one uppercase letter, one lowercase letter and one number: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+#Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+#Minimum eight and maximum 10 characters, at least one uppercase letter, one lowercase letter, one number and one special character: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$"
+
+#Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:
+      rule: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$
+      identicalCompareCount: 5
