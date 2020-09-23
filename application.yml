@@ -191,7 +191,7 @@ system:
       
 application:
    oauth:
-     b2e:
+     #b2e:
        #Bank:
          #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
          #clientId: feus
