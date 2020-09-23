@@ -217,6 +217,9 @@ application:
        UniversalBanking:
          clientId: f6073423-98a2-4781-9c36-9070eae45539
          clientSecret: dfa222f7-a793-4679-a0a4-7420f9771469
+       OPICS:
+         clientId: f6073423-98a2-4781-9d36-9270eae45539
+         clientSecret: dfa222f7-a793-4679-a0a4-7420f9771469
        DOB:
          clientId: de4f7c44-8dac-40fe-a745-55187cfce03e
          clientSecret: d338a2ad-c17c-45f1-9dbe-360648c8e53d
