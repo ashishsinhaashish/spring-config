@@ -197,11 +197,11 @@ application:
          clientId: feus
          clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
          scope: openId
-       #AppOps:
-         #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
-         #clientId: feus
-         #clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
-         #scope: openId
+       AppOps:
+         discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
+         clientId: feus
+         clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
+         scope: openId
      #b2c:
        #facebook:
          #discoveryUri: http://localhost:8080/auth/realms/feus/.well-known/openid-configuration
