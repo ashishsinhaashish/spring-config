@@ -218,9 +218,9 @@ application:
          #clientSecret: 267a2189-700f-47d5-9011-11473ecfb376
          #scope: openId
      b2b:
-       #UniversalBanking:
-         #clientId: f6073423-98a2-4781-9c36-9070eae45539
-         #clientSecret: dfa222f7-a793-4679-a0a4-7420f9771469
+       UniversalBanking:
+         clientId: f6073423-98a2-4781-9c36-9070eae45539
+         clientSecret: dfa222f7-a793-4679-a0a4-7420f9771469
        OPICS:
          clientId: f6073423-98a2-4781-9d36-9270eae45539
          clientSecret: dfa222f7-a793-4679-a0a4-7420f9771469
